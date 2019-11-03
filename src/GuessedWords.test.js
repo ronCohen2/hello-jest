@@ -9,13 +9,13 @@ import { exportAllDeclaration } from "@babel/types";
 
 const defualtProps = {
   SecretWord: "",
-  Success: false,
-  guessedWords: [{ guessedWord: "foo", letterMatchCount: 2 }]
+  Success: false
+  // guessedWords: [{ guessedWord: "foo", letterMatchCount: 2 }]
 };
 
 const setUp = props => {
   const setupProps = { ...defualtProps, ...props };
-  return shallow(<GuessedWords {...setupProps} />);
+  return shallow(<GuessedWords {...props} />);
 };
 
 describe("if there are not word guessed", () => {
@@ -29,17 +29,31 @@ describe("if there are not word guessed", () => {
   });
   test("render instruction to guess word ", () => {
     const instruction = findByTestAtrr(wrapper, "guess-instruction");
-    expect(instruction.length).toBe(0);
+    expect(instruction.length).toBe(1);
   });
 });
 describe("there are word guessed", () => {
   let wrapper;
-  beforeEach = () => {
-    wrapper = etUp({ guessedWords: [] });
-  };
-  
-  test("render without error", () => {});
-  test("render guessed word  section'", () => {});
-  test("correct number of guessed word", () => {});
+  const guessedWords = [
+    { guessWord: "train", numberOfMatch: 3 },
+    { guessWord: "agilt", numberOfMatch: 1 },
+    { guessWord: "party", numberOfMatch: 5 }
+  ];
+  beforeEach(() => {
+    wrapper = setUp({ guessedWords: guessedWords });
+  });
+
+  test("render without error", () => {
+    const component = findByTestAtrr(wrapper, "component-guess");
+    expect(component.length).toBe(1);
+  });
+  test("render guessed word section'", () => {
+    const guessWordSection = findByTestAtrr(wrapper, "guess-Word-section");
+    expect(guessWordSection.length).toBe(1);
+  });
+  test("correct number of guessed word", () => {
+    const guessWord = findByTestAtrr(wrapper, "guess-word");
+    expect(guessWord.length).toBe(guessedWords.length);
+  });
 });
 //41

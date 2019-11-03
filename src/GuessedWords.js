@@ -1,10 +1,22 @@
 import React from "react";
 const GuessedWords = props => {
-  const { GuessedWord } = props;
-  return (
-    <div data-test="component-guess">
-      {GuessedWord ? <span data-test="guess-instruction">blblbl</span> : null}
-    </div>
-  );
+  const { guessedWords } = props;
+  var content;
+  if (guessedWords.length == 0) {
+    content = <span data-test="guess-instruction">1)...... 2)... 3)...</span>;
+  } else {
+    content = (
+      <div data-test="guess-Word-section">
+        {guessedWords.map((word, key) => {
+          return (
+            <p data-test="guess-word" key={key}>
+              {word.guessWord}
+            </p>
+          );
+        })}
+      </div>
+    );
+  }
+  return <div data-test="component-guess">{content}</div>;
 };
 export default GuessedWords;
