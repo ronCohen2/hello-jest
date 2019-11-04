@@ -4,35 +4,55 @@ import { configure } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 configure({ adapter: new Adapter() });
 
-import { findByTestAtrr, storeFactory } from "./Test/testUtils.js";
+import { findByTestAtrr, storeFactory } from "./Test/testUtils";
 import Form from "./Form";
 
-const defaultProps = {};
-
-let setUp = (initialState = {}) => {
+const setUp = (initialState = {}) => {
   const store = storeFactory(initialState);
-  const wrapper = shallow(<Form store={store} />);
+  let wrapper = shallow(<Form store={store} />)
+    .dive()
+    .dive();
   return wrapper;
 };
 
 describe("render", () => {
   describe("word has not be guessed", () => {
     let wrapper;
-    beforeEach = () => {
+    beforeEach(() => {
       const initialState = { success: false };
       wrapper = setUp(initialState);
-    };
-    test("render without error", () => {
-      const div = findByTestAtrr(wrapper, "component-form");
-      expect(div.length).toBe(1);
     });
-    test("render input button ", () => {});
-    test("render submit button ", () => {});
+    test("render without error", () => {
+      const component = findByTestAtrr(wrapper, "component-form");
+      expect(component.length).toBe(1);
+    });
+    test("render input button ", () => {
+      const input = findByTestAtrr(wrapper, "form-input");
+      expect(input.length).toBe(1);
+    });
+    test("render submit button ", () => {
+      const submitButton = findByTestAtrr(wrapper, "form-submitButton");
+      expect(submitButton.length).toBe(1);
+    });
   });
   describe("word has be guessed", () => {
-    test("render without error", () => {});
-    test("does not render input button ", () => {});
-    test("does notrender submit button ", () => {});
+    let wrapper;
+    beforeEach(() => {
+      const initialState = { success: true };
+      wrapper = setUp(initialState);
+    });
+    test("render without error", () => {
+      const component = findByTestAtrr(wrapper, "component-form");
+      expect(component.length).toBe(1);
+    });
+    test("does not render input button ", () => {
+      const input = findByTestAtrr(wrapper, "form-input");
+      expect(input.length).toBe(0);
+    });
+    test("does not render submit button ", () => {
+      const submitButton = findByTestAtrr(wrapper, "form-submitButton");
+      expect(submitButton.length).toBe(0);
+    });
   });
 });
-// describe("update State", () => {});
+describe("update State", () => {});

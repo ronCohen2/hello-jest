@@ -4,6 +4,6 @@ import { createStore } from "redux";
 export const findByTestAtrr = (wrapper, value) => {
   return wrapper.find(`[data-test="${value}"]`);
 };
-export let storeFactory = initialState => {
+export const storeFactory = initialState => {
   return createStore(rootReducer, initialState);
 };
