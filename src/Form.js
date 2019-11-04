@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-class Input extends Component {
+class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
   render() {
-    return <div></div>;
+    return (
+      <div>
+        <button>D</button>
+      </div>
+    );
   }
 }
 const mapStateToProps = state => {
@@ -19,4 +23,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Input);
+)(Form);

@@ -11,8 +11,10 @@
     "jest-enzyme": "^7.1.2",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-redux": "^7.1.1",
     "react-scripts": "3.2.0",
-    "reactstrap": "^8.1.1"
+    "reactstrap": "^8.1.1",
+    "redux": "^4.0.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -23,6 +25,9 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "modulePaths": [
+    "<rootDir>"
+  ],
   "browserslist": {
     "production": [
       ">0.2%",

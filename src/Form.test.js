@@ -4,21 +4,27 @@ import { configure } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 configure({ adapter: new Adapter() });
 
-import { findByTestAtrr, storeFactory } from "./Test/testUtils";
-import Input from "./Input.js";
+import { findByTestAtrr, storeFactory } from "./Test/testUtils.js";
+import Form from "./Form";
 
 const defaultProps = {};
 
-const setUp = (SuccessReducer = {}) => {
-  const store = storeFactory(SuccessReducer);
-  const wrapper = shallow(<Input store={store} />);
-  console.log(wrapper.debug());
+let setUp = (initialState = {}) => {
+  const store = storeFactory(initialState);
+  const wrapper = shallow(<Form store={store} />);
+  return wrapper;
 };
 
 describe("render", () => {
   describe("word has not be guessed", () => {
+    let wrapper;
+    beforeEach = () => {
+      const initialState = { success: false };
+      wrapper = setUp(initialState);
+    };
     test("render without error", () => {
-      // const wrapper = setUp({ initialState: {} });
+      const div = findByTestAtrr(wrapper, "component-form");
+      expect(div.length).toBe(1);
     });
     test("render input button ", () => {});
     test("render submit button ", () => {});
@@ -29,4 +35,4 @@ describe("render", () => {
     test("does notrender submit button ", () => {});
   });
 });
-describe("update State", () => {});
+// describe("update State", () => {});
