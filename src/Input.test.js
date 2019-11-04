@@ -5,12 +5,12 @@ import Adapter from "enzyme-adapter-react-16";
 configure({ adapter: new Adapter() });
 
 import { findByTestAtrr, storeFactory } from "./Test/testUtils";
-import Input from "./Input";
+import Input from "./Input.js";
 
 const defaultProps = {};
 
-const setUp = ({ initialState: {} }) => {
-  const store = storeFactory(initialState);
+const setUp = (SuccessReducer = {}) => {
+  const store = storeFactory(SuccessReducer);
   const wrapper = shallow(<Input store={store} />);
   console.log(wrapper.debug());
 };
@@ -18,7 +18,7 @@ const setUp = ({ initialState: {} }) => {
 describe("render", () => {
   describe("word has not be guessed", () => {
     test("render without error", () => {
-      //   const wrapper = setUp({ initialState: {} });
+      // const wrapper = setUp({ initialState: {} });
     });
     test("render input button ", () => {});
     test("render submit button ", () => {});

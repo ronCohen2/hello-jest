@@ -3,6 +3,6 @@ import rootReducer from "../Reducer/rootReducer";
 export const findByTestAtrr = (wrapper, value) => {
   return wrapper.find(`[data-test="${value}"]`);
 };
-export const storeFactory = initialState => {
-  return createStore(rootReducer, initialState);
+export const storeFactory = SuccessReducer => {
+  return createStore(rootReducer, SuccessReducer);
 };
