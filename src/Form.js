@@ -8,18 +8,7 @@ class Form extends Component {
   }
 
   render() {
-    var content;
     const { success } = this.props;
-    // if (success) {
-    //   content = <h1>Success</h1>;
-    // } else {
-    //   content = (
-    //     <form>
-    //       <input type="text" data-test="form-input" />
-    //       <button data-test="form-submitButton">Submit</button>
-    //     </form>
-    //   );
-    // }
     return (
       <div data-test="component-form">
         {success ? null : (
