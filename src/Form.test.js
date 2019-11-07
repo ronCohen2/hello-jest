@@ -55,6 +55,16 @@ describe("render", () => {
     });
   });
 });
-describe("update State", () => {
-  
+describe("redux props ", () => {
+  test("has success in props ", () => {
+    const success = true;
+    const wrapper = setUp({ success });
+    const successProps = wrapper.instance().props.success;
+    expect(successProps).toBe(success);
+  });
+  test("geussWord action is function props", () => {
+    const wrapper = setUp();
+    const guessWordProps = wrapper.instance().props.guessWord;
+    expect(guessWordProps).toBeInstanceOf(Function);
+  });
 });

@@ -2,21 +2,37 @@ import React from "react";
 import "./App.css";
 import Congrats from "./Congrats";
 import GuessedWords from "./GuessedWords";
+import { connect } from "react-redux";
+import { getSecretWord } from "./Action/guessesWordAction";
+import Form from "./Form";
 
-function App() {
-  return (
-    <div className="App">
-      <h1>Jotto</h1>
-      <Congrats success={true} />
-      <GuessedWords
-        guessedWords={[
-          { guessWord: "train", numberOfMatch: 3 },
-          { guessWord: "agilt", numberOfMatch: 1 },
-          { guessWord: "party", numberOfMatch: 5 }
-        ]}
-      />
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <h1>Jotto</h1>
+        <Form />
+        <Congrats success={this.props.success} />
+        <GuessedWords guessedWords={this.props.guessedWord} />
+      </div>
+    );
+  }
 }
+const mapStateToProps = state => {
+  const { secretWord, success, guessedWord } = state;
 
-export default App;
+  return { secretWord, success, guessedWord };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    getSecretWord: () => dispatch(getSecretWord())
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
