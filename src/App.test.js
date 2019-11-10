@@ -2,9 +2,8 @@ import React from "react";
 import { shallow } from "enzyme";
 import { configure } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-configure({ adapter: new Adapter() });
-import { isExpressionWrapper, exportAllDeclaration } from "@babel/types";
-import App from "./App";
+configure({ adapter: new Adapter(), disableLifecycleMethods: true });
+import App, { UnconnectedApp } from "./App";
 import { storeFactory } from "./Test/testUtils";
 
 const setUp = (state = {}) => {
@@ -38,4 +37,24 @@ describe("redux props", () => {
     const getSecretWord = wrapper.instance().props.getSecretWord;
     expect(getSecretWord).toBeInstanceOf(Function);
   });
+});
+test("'getSecretWord' run on app mount", () => {
+  const getSecretWordMock = jest.fn();
+
+  const props = {
+    getSecretWord: getSecretWordMock,
+    success: false,
+    guessedWords: []
+  };
+
+  // set up app component with getSecretWordMock as the getSecretWord prop
+  const wrapper = shallow(<UnconnectedApp {...props} />);
+
+  // run lifecycle method
+  wrapper.instance().componentDidMount();
+
+  // check to see if mock ran
+  const getSecretWordCallCount = getSecretWordMock.mock.calls.length;
+
+  expect(getSecretWordCallCount).toBe(1);
 });

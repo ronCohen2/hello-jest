@@ -1,5 +1,6 @@
 import { getLetterMatchCount } from "../helper/method";
 import Axios from "axios";
+
 export const geussWord = guessWord => {
   return function(dispatch, getState) {
     const secretWord = getState().secretWord;
@@ -15,7 +16,8 @@ export const geussWord = guessWord => {
 };
 export const getSecretWord = () => {
   return dispatch => {
-    Axios.get("http://localhost:3000").then(res => {
+    Axios.get("http://localhost:3030").then(res => {
+      console.log(res.data);
       dispatch({ type: "SET_SECRET_WORD", payload: res.data });
     });
   };

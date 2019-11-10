@@ -2,10 +2,10 @@ import React from "react";
 import { shallow } from "enzyme";
 import { configure } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-configure({ adapter: new Adapter() });
+configure({ adapter: new Adapter(), disableLifecycleMethods: true });
 
 import { findByTestAtrr, storeFactory } from "./Test/testUtils";
-import Form from "./Form";
+import Form, { UnConnectedForm } from "./Form";
 
 const setUp = (initialState = {}) => {
   const store = storeFactory(initialState);
@@ -66,5 +66,32 @@ describe("redux props ", () => {
     const wrapper = setUp();
     const guessWordProps = wrapper.instance().props.guessWord;
     expect(guessWordProps).toBeInstanceOf(Function);
+  });
+});
+describe("", () => {
+  let wrapper;
+  let guessWorMock;
+  const guessWord = "train";
+  beforeEach(() => {
+    guessWorMock = jest.fn();
+    const props = {
+      guessWord: guessWorMock
+    };
+    wrapper = shallow(<UnConnectedForm {...props} />);
+    wrapper.instance().inputBox.current = { value: guessWord };
+    const SubmitButton = findByTestAtrr(wrapper, "form-submitButton");
+    SubmitButton.simulate("click", { preventDefault() {} });
+  });
+
+  test("call guessWord whan button click", () => {
+    const guessWordCallCount = guessWorMock.mock.calls.length;
+    expect(guessWordCallCount).toBe(1);
+  });
+  test(" call 'guessWord' with input value as argument", () => {
+    const guessWordArg = guessWorMock.mock.calls[0][0];
+    expect(guessWordArg).toBe(guessWord);
+  });
+  test("input box clear on submit", () => {
+    expect(wrapper.instance().inputBox.current.value).toBe("");
   });
 });
